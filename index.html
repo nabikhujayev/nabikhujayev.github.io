@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Signature Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #45a049;
+            --text-color: #333;
+            --background-color: #f4f4f4;
+            --error-color: #ff3860;
+        }
+
+        body {
+            font-family: 'Onest', sans-serif;
+            background-color: var(--background-color);
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+        }
+
+        .form-container {
+            max-width: 700px;
+            margin: auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .signature-preview {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-container">
+        <h1>Email Signature Generator</h1>
+        <form id="signatureForm">
+            <label>First Name:
+                <input type="text" placeholder="John" id="firstName" required>
+            </label>
+            <label>Last Name:
+                <input type="text" placeholder="Whick" id="lastName" required>
+            </label>
+            <label>Job Title:
+                <input type="text" placeholder="Developer" id="title">
+            </label>
+            <label>Mobile Number:
+                <input type="tel" id="mobileNumber" placeholder="+998 90 123 45 67" maxlength="19"
+                    oninput="formatUzbekPhoneNumber(this)">
+            </label>
+            <label>Email Address:
+                <input type="email" id="email" placeholder="Adds automatically '@greenwhite.uz'" required>
+            </label>
+            <button type="button" onclick="generateSignature()">Generate Signature</button>
+        </form>
+        <div id="signature" class="signature-preview"></div>
+        <button id="copyButton" style="display: none;" onclick="copySignature()">Copy Signature</button>
+    </div>
+
+    <script>
+        function generateSignature() {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const title = document.getElementById('title').value;
+            const mobileNumber = document.getElementById('mobileNumber').value;
+            const email = document.getElementById('email').value;
+
+            const signature = `
+            <div style="background-color:#ffffff;">
+                <table height="100%" width="600px" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td valign="top" align="center">
+                            <table style="padding: 10px; height: 200px; width: 650px; margin: auto;">
+                                <tbody>
+                                    <tr>
+                                        <td style="padding-bottom: 5px;">
+                                            <span style="font-size: 20px;font-weight: 600;">${firstName} ${lastName}</span>
+                                            <br>
+                                            <span style="color: #5C5C66;font-size: 18px;font-weight: 400;">${title}</span>
+                                        </td>
+                                        <td rowspan="4" style="text-align: center; align-content: end;">
+                                            <div>
+                                                <a href="https://smartup.uz" target="_blank" rel="noopener noreferrer"
+                                                    style="text-decoration: none;">
+                                                    <img src="https://nabikhujayev.github.io/Green/icons/logo-link.png"
+                                                        height="236">
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-top: 5px; padding-bottom: 5px;">
+                                            <span
+                                                style="padding-top: 10px;font-size: 18px;font-weight: 600;">${mobileNumber}</span>
+                                            <br>
+                                            <span style="color: #5C5C66;font-size: 18px;font-weight: 400;">${email}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-top: 5px; padding-bottom: 5px;">
+                                            <span
+                                                style="color: #5C5C66;font-size: 16px;font-weight: 400;vertical-align: bottom;margin-top: 10px; margin-bottom: 10px;">
+                                                We're in Uzbekistan:<br>
+                                                Tashkent, Beshyogoch, 22
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-top: 5px;">
+                                            <table>
+                                                <tr>
+                                                    <td width="40">
+                                                        <a href="https://www.facebook.com/SmartupERP/" target="_blank"
+                                                            rel="noopener noreferrer" style="text-decoration: none;"><img
+                                                                src="https://nabikhujayev.github.io/Green/icons/facebook.png"
+                                                                style="border:0; height:30px; width:30px;" width="30"></a>
+                                                    </td>
+                                                    <td width="40">
+                                                        <a href="https://www.linkedin.com/showcase/smartup-erp/" target="_blank"
+                                                            rel="noopener noreferrer" style="text-decoration: none;"><img
+                                                                src="https://nabikhujayev.github.io/Green/icons/linkedin.png"
+                                                                style="border:0; height:30px; width:30px;" width="30"></a>
+                                                    </td>
+                                                    <td width="40">
+                                                        <a href="https://www.youtube.com/@smartup_erp" target="_blank"
+                                                            rel="noopener noreferrer" style="text-decoration: none;"><img
+                                                                src="https://nabikhujayev.github.io/Green/icons/youtube.png"
+                                                                style="border:0; height:30px; width:30px;" width="30"></a>
+                                                    </td>
+                                                    <td width="40">
+                                                        <a href="https://www.instagram.com/smartup_erp/" target="_blank"
+                                                            rel="noopener noreferrer" style="text-decoration: none;"><img
+                                                                src="https://nabikhujayev.github.io/Green/icons/instagram.png"
+                                                                style="border:0; height:30px; width:30px;" width="30"></a>
+                                                    </td>
+                                                    <td width="40">
+                                                        <a href="https://yandex.uz/maps/org/164690234624/" target="_blank"
+                                                            rel="noopener noreferrer" style="text-decoration: none;"><img
+                                                                src="https://nabikhujayev.github.io/Green/icons/map.png"
+                                                                style="border:0; height:30px; width:30px;" width="30"></a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>`;
+
+            document.getElementById('signature').innerHTML = signature;
+            document.getElementById('copyButton').style.display = 'inline-block';
+        }
+
+        function copySignature() {
+            const signatureDiv = document.getElementById('signature');
+            const range = document.createRange();
+            range.selectNodeContents(signatureDiv);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+            const popup = document.createElement('div');
+            popup.textContent = 'Signature copied to clipboard!';
+            popup.style.position = 'fixed';
+            popup.style.top = '20px';
+            popup.style.left = '50%';
+            popup.style.transform = 'translateX(-50%)';
+            popup.style.backgroundColor = '#4CAF50';
+            popup.style.color = 'white';
+            popup.style.padding = '10px 20px';
+            popup.style.borderRadius = '5px';
+            popup.style.fontSize = '16px';
+            popup.style.zIndex = '1000';
+            document.body.appendChild(popup);
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 3000);
+
+        }
+        function formatUzbekPhoneNumber(input) {
+            let phoneNumber = input.value.replace(/[^\d]/g, '');
+            let formatted = '+998';
+            if (phoneNumber.length > 3) {
+                formatted += ' ' + phoneNumber.slice(3, 5);
+            }
+            if (phoneNumber.length > 5) {
+                formatted += ' ' + phoneNumber.slice(5, 8);
+            }
+            if (phoneNumber.length > 8) {
+                formatted += ' ' + phoneNumber.slice(8, 10);
+            }
+            if (phoneNumber.length > 10) {
+                formatted += ' ' + phoneNumber.slice(10);
+            }
+            input.value = formatted.slice(0, 19);
+        }
+
+        document.getElementById('mobileNumber').addEventListener('focus', function () {
+            if (this.value === '') {
+                this.value = '+998';
+            }
+        });
+
+        document.getElementById('email').addEventListener('blur', function () {
+            let email = this.value.trim();
+            if (email && !email.includes('@')) {
+                this.value = email + '@greenwhite.uz';
+                this.dispatchEvent(new Event('input'));
+            }
+        });
+        window.addEventListener('load', generateSignature);
+        const inputs = document.querySelectorAll('#signatureForm input');
+
+        inputs.forEach(input => {
+            input.addEventListener('input', generateSignature);
+        });
+
+    </script>
+</body>
+
+</html>
